@@ -1,0 +1,33 @@
+version: 1.0.8
+cache: true
+
+mcpServers:
+  # Stdio mode - for embedded LibreChat usage
+  neo4j-memory-stdio:
+    type: stdio
+    command: python
+    args:
+      - "-m"
+      - "mcp_neo4j_memory"
+      - "--db-url"
+      - "neo4j://neo4j:7687"
+      - "--username"
+      - "neo4j"
+      - "--password"
+      - "your_password_here"
+      - "--mode"
+      - "stdio"
+    timeout: 30000
+    initTimeout: 10000
+    iconPath: /app/client/public/assets/neo4j-icon.svg
+
+  # SSE mode - for containerized usage
+  neo4j-memory-sse:
+    type: sse
+    url: http://mcp-neo4j-memory:3001/sse
+    headers:
+      X-User-ID: "{{LIBRECHAT_USER_ID}}"
+      Content-Type: "application/json"
+    timeout: 30000
+    initTimeout: 10000
+    iconPath: /app/client/public/assets/neo4j-icon.svg
